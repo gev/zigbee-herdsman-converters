@@ -8123,6 +8123,91 @@ const devices = [
         description: 'FLAIR Viyu Smarte LED bulb RGB E27',
         extend: generic.light_onoff_brightness_colortemp_colorxy,
     },
+
+    {
+        zigbeeModel: ['82c167c95ed746cdbd21d6817f72c593'],
+        model: 'RE-20-Z',
+        vendor: 'HOMMYN',
+        description: 'Universal 3 channel relay',
+        supports: 'on/off',
+        fromZigbee: [fz.on_off],
+        toZigbee: [tz.on_off],
+        endpoint: (device) => {
+            return {'l1': 1, 'l2': 2, 'l3': 3};
+        }
+    },
+    {
+    	zigbeeModel: ['31c989b65ebb45beaf3b67b1361d3965'],
+    	model: 'T18W3Z',
+    	vendor: 'ORVIBO',
+    	description: 'Neutral Smart Switch 3 Gang',
+    	supports: 'on/off',
+    	fromZigbee: [fz.on_off],
+    	toZigbee: [tz.on_off],
+    	endpoint: (device) => {
+        	return {'l1': 1, 'l2': 2, 'l3': 3};
+    	}
+    },
+    {
+        zigbeeModel: ['d1310ffa02f944e48c386886416c68a3'],
+        model: 'T19W3Z',
+        vendor: 'ORVIBO',
+        description: 'Dimmer',
+        supports: 'on/off, brightness',
+        fromZigbee: [fz.brightness, fz.on_off],
+        toZigbee: [tz.light_onoff_brightness],
+        endpoint: (device) => {
+            return {'l1': 1};
+        }
+    },
+    {
+        zigbeeModel: ['de90154ec13e4a7899eeab6b54703861'],
+        model: 'DS-20-Z',
+        vendor: 'HOMMYN',
+        description: 'Door sensor',
+        supports: 'contact',
+        fromZigbee: [fz.ias_contact_alarm_1, fz.identify, fz.battery_200],
+        toZigbee: [],
+    },
+    {
+        zigbeeModel: ['2f077707a13f4120846e0775df7e2efe'],
+        model: 'WS-20-Z',
+        vendor: 'HOMMYN',
+        description: 'Leak sensor',
+        supports: 'contact',
+        fromZigbee: [fz.ias_water_leak_alarm_1, fz.identify],
+        toZigbee: [],
+    },    
+    {
+        zigbeeModel: ['84780a9533b64db29050e3d226e7ffbe'],
+        model: 'MS-21-Z',
+        vendor: 'HOMMYN',
+        description: 'Motion sensor',
+        supports: 'occupancy',
+        fromZigbee: [fz.iaszone_occupancy_1_with_timeout],
+        toZigbee: [],
+    },
+    {
+        zigbeeModel: ['b467083cfc864f5e826459e5d8ea6079'],
+        model: 'TS-20-Z',
+        vendor: 'HOMMYN',
+        description: 'Temperature & humidity sensor',
+        supports: 'temperature and humidity',
+        fromZigbee: [fz.temperature, fz.humidity, fz.generic_battery],
+        toZigbee: [],
+        meta: {configureKey: 2},
+        configure: async (device, coordinatorEndpoint) => {
+            const endpoint1 = device.getEndpoint(1);
+            await bind(endpoint1, coordinatorEndpoint, ['msTemperatureMeasurement', 'genPowerCfg']);
+            const endpoint2 = device.getEndpoint(2);
+            await bind(endpoint2, coordinatorEndpoint, ['msRelativeHumidity']);
+            await configureReporting.temperature(endpoint1);
+            await configureReporting.batteryVoltage(endpoint1);
+            await configureReporting.batteryPercentageRemaining(endpoint1);
+            await configureReporting.humidity(endpoint2);
+        },
+    },
+
 ];
 
 module.exports = devices.map((device) =>
