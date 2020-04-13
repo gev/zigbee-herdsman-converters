@@ -8124,6 +8124,7 @@ const devices = [
         extend: generic.light_onoff_brightness_colortemp_colorxy,
     },
 
+    // HOMMYN
     {
         zigbeeModel: ['82c167c95ed746cdbd21d6817f72c593'],
         model: 'RE-20-Z',
@@ -8137,16 +8138,21 @@ const devices = [
         }
     },
     {
-    	zigbeeModel: ['31c989b65ebb45beaf3b67b1361d3965'],
-    	model: 'T18W3Z',
-    	vendor: 'ORVIBO',
-    	description: 'Neutral Smart Switch 3 Gang',
-    	supports: 'on/off',
-    	fromZigbee: [fz.on_off],
-    	toZigbee: [tz.on_off],
-    	endpoint: (device) => {
-        	return {'l1': 1, 'l2': 2, 'l3': 3};
-    	}
+        zigbeeModel: [
+        '31c989b65ebb45beaf3b67b1361d3965',
+        '781dca2599f34ab6b429c9fe5b5f943d',
+        'ea78482667a7450ea131cc2acb9b88d8',
+        '074b3ffba5a045b7afd94c47079dd553'
+        ],
+        model: 'T18W3Z',
+        vendor: 'ORVIBO',
+        description: 'Neutral Smart Switch 1,2,3 Gang',
+        supports: 'on/off',
+        fromZigbee: [fz.on_off],
+        toZigbee: [tz.on_off],
+        endpoint: (device) => {
+            return {'l1': 1, 'l2': 2, 'l3': 3};
+        }
     },
     {
         zigbeeModel: ['d1310ffa02f944e48c386886416c68a3'],
@@ -8177,10 +8183,13 @@ const devices = [
         supports: 'contact',
         fromZigbee: [fz.ias_water_leak_alarm_1, fz.identify],
         toZigbee: [],
-    },    
+    },
     {
-        zigbeeModel: ['84780a9533b64db29050e3d226e7ffbe'],
-        model: 'MS-21-Z',
+        zigbeeModel: [
+        '84780a9533b64db29050e3d226e7ffbe', 
+        '5e56b9c85b6e4fcaaaad3c1319e16c57'
+        ],
+        model: 'MS-21-Z, MS-20-Z',
         vendor: 'HOMMYN',
         description: 'Motion sensor',
         supports: 'occupancy',
@@ -8207,7 +8216,13 @@ const devices = [
             await configureReporting.humidity(endpoint2);
         },
     },
-
+    {
+        zigbeeModel: ['8643db61de35494d93e72c1289b526a3'],
+        model: 'RL804CZB',
+        vendor: 'ORVIBO',
+        description: 'RGB control box',
+        extend: generic.light_onoff_brightness_colorxy,
+    },
 ];
 
 module.exports = devices.map((device) =>
